@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'auth.apps.AuthConfig',
+    'ads',
+    'proposals',
 ]
 
 MIDDLEWARE = [
@@ -122,13 +124,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = 'static/'
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = 'ad_list'
 
 LOGIN_URL = 'login'
 
-LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'

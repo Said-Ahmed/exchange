@@ -1,0 +1,14 @@
+venv/
+.env
+
+*.sqlite3
+*.db
+
+__pycache__/
+*.pyc
+
+.vscode/
+.idea/
+
+htmlcov/
+.coveragemedia/

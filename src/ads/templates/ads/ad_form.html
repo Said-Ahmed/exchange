@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Редактирование{% else %}Создание{% endif %} объявления{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>{% if form.instance.pk %}Редактирование{% else %}Создание{% endif %} объявления</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-field">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                    <span class="helptext">{{ field.help_text }}</span>
+                {% endif %}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                {% if form.instance.pk %}Сохранить изменения{% else %}Создать объявление{% endif %}
+            </button>
+            <a href="{% url 'ad_list' %}" class="btn btn-cancel">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

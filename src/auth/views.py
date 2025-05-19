@@ -1,6 +1,6 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from auth.forms import LoginForm, UserRegistrationForm
 
@@ -25,6 +25,7 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form})
 
+
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -41,3 +42,8 @@ def register(request):
     return render(request,
 'account/register.html',
 {'user_form': user_form})
+
+
+def custom_logout(request):
+    logout(request)
+    return redirect('login')

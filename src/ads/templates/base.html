@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Обмен товарами</title>
+    <style>
+        .pagination { margin-top: 20px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+</head>
+<body>
+    <header>
+        {% if user.is_authenticated %}
+            <p>Привет, {{ user.username }}! <a href="{% url 'logout' %}">Выйти</a></p>
+        {% else %}
+            <a href="{% url 'login' %}">Войти</a>
+        {% endif %}
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+        <div class="create-ad-btn">
+            <a href="{% url 'ad_create' %}" class="button">+ Добавить объявление</a>
+        </div>
+    {% endif %}
+    <h1 class="main-title">Список объявлений</h1>
+
+    <div class="search-form">
+        <form method="get" class="filter-form">
+            <div class="form-row">
+                <div class="form-group">
+                    {{ search_form.search.label_tag }}
+                    {{ search_form.search }}
+                </div>
+                <div class="form-group">
+                    {{ search_form.category.label_tag }}
+                    {{ search_form.category }}
+                </div>
+                <div class="form-group">
+                    {{ search_form.condition.label_tag }}
+                    {{ search_form.condition }}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-filter">Применить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+        <div class="ads-grid">
+        {% for ad in page_obj %}
+            <div class="ad-card">
+                <div class="ad-image-wrapper">
+                    <img src="{{ ad.image_url.url }}" alt="{{ ad.title }}" class="ad-image" loading="lazy" style="width: 300px; height: 300px; object-fit: cover;">
+                </div>
+                <div class="ad-content">
+                    <h3 class="ad-title">{{ ad.title|truncatechars:30 }}</h3>
+                    <p class="ad-description">{{ ad.description|truncatechars:100 }}</p>
+                    <div class="ad-meta">
+                        <span class="meta-item">{{ ad.get_category_display }}</span>
+                        <span class="meta-item">{{ ad.get_condition_display }}</span>
+                        <span class="meta-date">{{ ad.created_at|date:"d.m.Y" }}</span>
+                       <span>Пользователь: {{ ad.user.username }}</span>
+                    </div>
+
+                    {% if user.is_authenticated and user == ad.user %}
+                    <div class="ad-actions">
+                        <a href="{% url 'ad_update' pk=ad.pk %}" class="btn btn-edit">✏️</a>
+                        <a href="{% url 'ad_delete' pk=ad.pk %}" class="btn btn-delete">🗑️</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; Назад</a>
+        {% endif %}
+
+        <span class="current-page">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="page-link">Вперед &raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

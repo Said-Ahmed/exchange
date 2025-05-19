@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Log-in{% endblock %}
+{% block title %}Войти{% endblock %}
 {% block content %}
 <h1>Log-in</h1>
-  <p>Please, use the following form to log-in:</p>
-  If you don't have an account
-  <a href="{% url "register" %}">register here</a>.
+  <p>Пожалуйста, воспользуйтесь следующей формой для входа в систему:</p>
+  Если у вас нет учетной записи
+  <a href="{% url "register" %}">зарегистрируйтесь здесь</a>.
   <form method="post">
     {{ form.as_p }}
     {% csrf_token %}
